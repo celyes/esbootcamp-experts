@@ -1,52 +1,12 @@
-<?php
+<?php 
+require_once "src/Cache.php";
+require_once "src/Drivers/FileDriver.php";
+require_once "src/Drivers/MemcachedDriver.php";
+require_once "src/Drivers/RedisDriver.php";
 
-class Player
-{
-    public $name;
-    public $age;
+$cache = new Cache(new FileDriver());
 
-    public function __construct($name, $age)
-    {
-        $this->name = $name;
-        $this->age = $age;
-    }
-
-    public function play() 
-    {
-        return "playing...";
-    }
-
-    public function train()
-    {
-        return "training... ";
-    }
-}
-
-class Team
-{
-    public $name;
-    public $players;
-    public $headquarters;
-    public $logo;
-
-    public function __construct($name, $players, $headquarters, $logo)
-    {
-        $this->name = $name;
-        $this->players = $players;
-        $this->headquarters = $headquarters;
-        $this->logo = $logo;
-    }
-    public function averageAge()
-    {
-        return array_sum(array_column($this->players, "age")) / count($this->players);
-    }
-    // lambda player: player.age
-}
-$players = [
-    new Player("Benzema", 33),
-    new Player("Acensio", 26)    
-];
-$realMadrid = new Team("Real Madrid", $players, "Madrid", "real-madrid.png");
-
-
-var_dump($realMadrid->averageAge());
+$cache->set("key", "value");
+$cache->set("key2", "value2");
+$cache->set("key3", "value3");
+echo $cache->get("key");
